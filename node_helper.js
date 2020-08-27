@@ -22,29 +22,36 @@ module.exports = NodeHelper.create({
 		if (notification === "INIT_OB") {
 			console.log("MMM ObjectBlocks Notification:", 
 notification, "payload: ", payload);
-			let websocket_URL = payload;
+			//let websocket_URL = payload;
+			let websockets = payload;
 
-			let ws = new WebSocket(websocket_URL);
+			for(var i = 0; i < websockets.length; i++) {
+				let websocket = websockets[i]; // { name: xxxx, websocket_URL: xxx }
 
-			// onopen: called when connected
-			ws.onopen = function() {
-				console.log("Websocket connected");
-			};
+				let ws = new WebSocket(websocket.websocket_URL);
 
-			let self = this;
+				// onopen: called when connected
+				ws.onopen = function() {
+					console.log("Websocket connected");
+				};
 
-			// onmessage:  called when message arrives
-			ws.onmessage = function(event) {
-				let message = event.data; // actual data
-				let data = JSON.parse(message); // convert string to JSON
-				console.log("data: " + data.value);
-				self.sendSocketNotification("DATA_RECV", data.value);
-			};
+				let self = this;
 
-			// onclose:  called when disconnected
-			ws.onclose = function() {
-				console.log("Websocket disconnected");
-			};
+				// onmessage:  called when message arrives
+				ws.onmessage = function(event) {
+					let message = event.data; // actual data
+					let data = JSON.parse(message); // convert string to JSON
+					// console.log("data: " + data.value);
+					//console.log("url: " + ws.url + " value: " + data.value);
+					self.sendSocketNotification("DATA_RECV", 
+						{ url: ws.url, value: data.value });
+				};
+
+				// onclose:  called when disconnected
+				ws.onclose = function() {
+					console.log("Websocket disconnected");
+				};
+			}
 		}
 	},
 
