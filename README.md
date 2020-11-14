@@ -1,35 +1,40 @@
-# MagicMirror-Module-Template
-This is a module to help developers to start building their own modules for the [MagicMirror](https://github.com/MichMich/MagicMirror). 
+# MMM-ObjectBlocks
+This is a module to help communicate between Magic Mirror and Arduino via Web Socket and ObjectBlocks IOT Education Platform (https://www.objectblocks.cc).
 
-There samples of code for:
-- External request
-- Config parameters
-- Custom URL path route
-- Passing of messages (NOTIFICATIONS)
-
-Also this module include tasks for checking your code. For that you need install the developer dependencies.
-
-```
-cd MI_MODULE_PATH && npm install 
-```
-
-Run the `test` npm script
-```
-npm test
-```
-
-Current Tests:
-- [ESLint](http://eslint.org/) for linting the javascript
-- [stylelint](https://stylelint.io/) for linting the CSS with [stylelint-config-standard](https://github.com/stylelint/stylelint-config-standard) as its base
-- [jsonlint](https://github.com/zaach/jsonlint) for linting the translation files
-- [markdownlint](https://github.com/DavidAnson/markdownlint) for checking the markdown files (`README.md`, `CHANGELOG.md`, `LICENSE.txt`)
-- [js-yaml](https://github.com/nodeca/js-yaml) to lint the `.travis.yml` (run through [grunt-yamllint](https://github.com/geedew/grunt-yamllint))
-
+With ObjectBlocks IOT Education platform, you can easily create intelligent devices with your choice of micro-processors (Arduino, micro:bit etc), and setup your Magic Mirror to centrally display the information sent from your devices.  
 
 ## Installation
 
-`bash -c "$(curl -sL https://raw.githubusercontent.com/roramirez/MagicMirror-Module-Template/master/create_module.sh)"`
+```
+git clone https://github.com/jimmykh/MMM-ObjectBlocks
+cd MMM-ObjectBlocks
+npm install
+```
 
-This creates a module example to start your development more easy.
+## Configuration
 
-If you have any suggest, please let me know [by an issue](https://github.com/roramirez/MagicMirror-Module-Template/issues/new).
+Open config.js and add in the followings:
+
+```
+{
+  module: "MMM-ObjectBlocks",
+  position: "top_left",
+  config: {
+    websockets: [
+      { 
+        name: "Light",
+        websocket_URL: "wss://hub.objectblocks.cc/channel/xxxxxxxxxxxxxx",
+      },
+      { 
+        name: "Temperature",
+        websocket_URL: "wss://hub.objectblocks.cc/channel/yyyyyyyyyyyyyy",
+      }
+   ]
+  }
+}
+```
+
+- websocket_URL can be found under Webhook of corresponding channel
+- you can define as many websockets as you want, and each will be displayed in a separate row.
+
+If you have any suggestion and questions, please contact us by objectblocks@coding101.hk 
