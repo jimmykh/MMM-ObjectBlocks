@@ -37,4 +37,4 @@ Open config.js and add in the followings:
 - websocket_URL can be found under Webhook of corresponding channel
 - you can define as many websockets as you want, and each will be displayed in a separate row.
 
-If you have any suggestion and questions, please contact us by objectblocks@coding101.hk 
+If you have any suggestion and questions, please contact us by technical@coding101.hk 
